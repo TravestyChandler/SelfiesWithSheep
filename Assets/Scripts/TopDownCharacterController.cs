@@ -15,8 +15,8 @@ public class TopDownCharacterController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		//Vector3 mouseTarget = Camera.main.ScreenToWorldPoint(Input.mousePosition);//new Vector3(Input.mousePosition.x, Input.mousePosition.y);
-		//this.transform.rotation = Utility.LookAt2D(this.gameObject.transform, mouseTarget);
+		Vector3 mouseTarget = Camera.main.ScreenToWorldPoint(Input.mousePosition);//new Vector3(Input.mousePosition.x, Input.mousePosition.y);
+		this.transform.rotation = Utility.LookAt2D(this.gameObject.transform, mouseTarget);
 		//Controls
 		//Base Control Scheme
 		// W,A,S,D movement
