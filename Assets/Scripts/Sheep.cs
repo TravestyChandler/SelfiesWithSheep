@@ -6,79 +6,109 @@ public class Sheep : MonoBehaviour {
 	public GameObject player;
 	public Sprite[] sheepSprites;
 	public float moveSpeed = 5f;
-	public float moveDragMultiplier, stillDragMultiplier;
-	private string feeling;
-	private string personality;
-	private int move = 1;
+	public float moveDragMultiplier;
+	public string feeling;
+	public string personality;
 	private bool moving, waiting;
 
 	// Use this for initialization
+	// Set personality traits and color of sheep
 	void Awake () {
+		DetermineTexture();
+		DetermineFeeling ();
+		DeterminePersonality ();
+		SetMovement(feeling);
+		moving = false;
+		waiting = false;
+	}
+
+	// Randomizes sheep texture
+	void DetermineTexture() {
 		spriteRenderer = this.GetComponent<SpriteRenderer>();
 		int r = (int)Random.Range (0.00f, 2.99f);
 		spriteRenderer.sprite = sheepSprites[r];
-		int r2 = (int)Random.Range (0f, 1.999999f);
-		if(r2 == 0) {
+	}
+
+	// Randomizes "feeling" of sheep
+	void DetermineFeeling() {
+		int r = (int)Random.Range (0f, 1.999999f);
+		if(r == 0) {
 			feeling = "excited";
-		} else if (r2 == 1) {
+		} else if (r == 1) {
 			feeling = "apathetic";
 		}
-		moving = false;
-		waiting = false;
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		/*if(move > 0) {
-			StartCoroutine(WaitToMove(feeling, "shy"));
-		}*/
-		if(!moving && !waiting) {
-			StartCoroutine (WaitBabyWait ());
+
+	// Randomizes "personality" of sheep
+	void DeterminePersonality() {
+		int r = (int)Random.Range (0f, 2.999999f);
+		if(r == 0) {
+			personality = "shy";
+		} else if (r == 1) {
+			personality = "apathetic";
+		} else if (r == 2) {
+			personality = "friendly";
 		}
 	}
 
-	IEnumerator WaitBabyWait() {
+	// Sets movement drag and speed based on feeling
+	void SetMovement(string feels) {
+		if(feels == "excited") {
+			moveSpeed = 150;
+			moveDragMultiplier = 0.02f;
+		} else {
+			moveSpeed = 100;
+			moveDragMultiplier = 0.02f;
+		}
+	}
+
+	// Update is called once per frame
+	void Update () {
+		if(!moving && !waiting) {
+			StartCoroutine (WaitBabyWait (feeling));
+		}
+	}
+
+	IEnumerator WaitBabyWait(string feels) {
 		waiting = true;
+		float r;
 		// get random wait time
-		yield return new WaitForSeconds(1.5f);
-		Move();
+		if(feels == "excited") 
+			r = Random.Range (0f, 1.5f);
+		else 
+			r = Random.Range (1.0f, 3.0f);
+		yield return new WaitForSeconds(r);
+		Move(personality);
 		waiting = false;
 		moving = false;
 	}
 
-	void Move() {
+	void Move(string feels) {
 		moving = true;
-		Vector2 direction = new Vector2(Random.Range (-Screen.width,Screen.width), Random.Range (-Screen.height,Screen.height));
+		Vector2 direction = new Vector2(0f,0f);
+		float distance = 0f;
+		// get random direction
+		if(feels == "shy") {
+			direction = player.transform.position - this.transform.position;
+			distance = direction.magnitude;
+			//Debug.Log (distance);
+			if(distance < 3f)
+				direction = -direction;
+			else
+				direction = new Vector2(Random.Range (-Screen.width,Screen.width), Random.Range (-Screen.height,Screen.height));
+		} else if(feels == "apathetic") {
+			direction = new Vector2(Random.Range (-Screen.width,Screen.width), Random.Range (-Screen.height,Screen.height));
+		} else {
+			direction = player.transform.position - this.transform.position;
+			distance = direction.magnitude;
+			if(distance > 4f)
+				direction = new Vector2(Random.Range (-Screen.width,Screen.width), Random.Range (-Screen.height,Screen.height));
+			else if(distance < 1.5f)
+				direction = new Vector2(0f,0f);
+		}
+		//Vector2 direction = new Vector2(Random.Range (-Screen.width,Screen.width), Random.Range (-Screen.height,Screen.height));
 		direction.Normalize();
 		this.rigidbody2D.AddForce (direction*moveSpeed);
 		this.rigidbody2D.drag = moveSpeed * moveDragMultiplier;
-	}
-
-	IEnumerator WaitToMove(string f, string p) {
-		move = 0;
-		float t = 0;;
-		float distance = Vector2.Distance(this.transform.position, player.transform.position);
-		if(distance > 3) {
-			Vector2 direction = new Vector2 (0f,0f);
-			if(f == "excited")
-				t = Random.Range (0f, 2f);
-			else if (p == "apathetic") {
-				t = Random.Range (1f, 3f);
-			}
-			if(p == "shy") {
-				direction = transform.position - player.transform.position;
-				direction.Normalize();
-			} else if (p == "apathetic") {
-
-			} else if (p == "friendly") {
-
-			}
-			yield return new WaitForSeconds(t);
-			// move
-			this.rigidbody2D.AddForce (direction*moveSpeed);
-			this.rigidbody2D.drag = moveSpeed * moveDragMultiplier;
-		}
-		yield return new WaitForSeconds(t);
-		move = 1;
-	}
+	}	
 }
