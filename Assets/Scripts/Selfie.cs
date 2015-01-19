@@ -15,7 +15,6 @@ public class Selfie : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		//col = this.GetComponent<EdgeCollider2D>();
 		colliderList = new List<Collider2D>();
 		lastCount = 0;
 		spriteRenderer.renderer.enabled = false;
@@ -26,6 +25,8 @@ public class Selfie : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		//Debug.Log (colliderList.Count);
+		// Show selfie area while space is held
+		// Take selfie when space is released
 		if(Input.GetKey ("space")) {
 			spriteRenderer.renderer.enabled = true;
 		}
@@ -36,19 +37,18 @@ public class Selfie : MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D(Collider2D col) {
-		//Debug.Log ("Enter!");
 		if(col.gameObject.tag != "Bounds") 
 			colliderList.Add(col);
 		//Debug.Log (count);
 	}
 
 	void OnTriggerExit2D(Collider2D col) {
-		//Debug.Log ("Exit!");
 		if(col.gameObject.tag != "Bounds") 
 			colliderList.Remove(col);
 
 	}
 
+	// Take the selfie! Update the last and high counts!
 	void SelfieShot() {
 		lastCount = colliderList.Count;
 		if(lastCount > highCount) {

@@ -69,6 +69,7 @@ public class Sheep : MonoBehaviour {
 		}
 	}
 
+	// Different movement frequency for different feelings
 	IEnumerator WaitBabyWait(string feels) {
 		waiting = true;
 		float r;
@@ -83,6 +84,7 @@ public class Sheep : MonoBehaviour {
 		moving = false;
 	}
 
+	// Different move characteristics for different personalities
 	void Move(string feels) {
 		moving = true;
 		Vector2 direction = new Vector2(0f,0f);
@@ -108,6 +110,8 @@ public class Sheep : MonoBehaviour {
 		}
 		//Vector2 direction = new Vector2(Random.Range (-Screen.width,Screen.width), Random.Range (-Screen.height,Screen.height));
 		direction.Normalize();
+		// Rotate Sheep and move
+		this.transform.rotation = Utility.LookAt2D(this.gameObject.transform, direction);
 		this.rigidbody2D.AddForce (direction*moveSpeed);
 		this.rigidbody2D.drag = moveSpeed * moveDragMultiplier;
 	}	
