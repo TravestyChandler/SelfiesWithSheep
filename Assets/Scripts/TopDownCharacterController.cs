@@ -8,13 +8,17 @@ public class TopDownCharacterController : MonoBehaviour {
 	public float moveSpeed = 5f;
 	public float moveDragMultiplier, stillDragMultiplier;
 	public bool moving = false;
+	public Animator anim;
+
 
 	// Use this for initialization
 	void Start () {
+		anim = this.GetComponent<Animator>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
+
 		Vector3 mouseTarget = Camera.main.ScreenToWorldPoint(Input.mousePosition);//new Vector3(Input.mousePosition.x, Input.mousePosition.y);
 		this.transform.rotation = Utility.LookAt2D(this.gameObject.transform, mouseTarget);
 		//Controls
@@ -42,6 +46,12 @@ public class TopDownCharacterController : MonoBehaviour {
 		}
 		if(!moving){
 			rigidbody2D.drag = moveSpeed * stillDragMultiplier;
+		}
+		if(moving){
+			anim.SetBool("Moving", true);
+		}
+		else{
+			anim.SetBool("Moving", false);
 		}
 		moving = false;
 	}
