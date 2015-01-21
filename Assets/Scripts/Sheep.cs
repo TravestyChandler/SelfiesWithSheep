@@ -111,7 +111,10 @@ public class Sheep : MonoBehaviour {
 		//Vector2 direction = new Vector2(Random.Range (-Screen.width,Screen.width), Random.Range (-Screen.height,Screen.height));
 		direction.Normalize();
 		// Rotate Sheep and move
-		this.transform.rotation = Utility.LookAt2D(this.gameObject.transform, direction);
+		//this.transform.rotation = Utility.LookAt2D(this.gameObject.transform, direction);
+		float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+		angle -= 90;
+		this.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
 		this.rigidbody2D.AddForce (direction*moveSpeed);
 		this.rigidbody2D.drag = moveSpeed * moveDragMultiplier;
 	}	
