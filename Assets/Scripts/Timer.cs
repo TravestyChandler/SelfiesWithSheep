@@ -28,7 +28,7 @@ public class Timer : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if(timerText.text == "0") {
-			//Debug.Log ("DONEEEE");
+			Application.LoadLevel (2);
 		}
 	}
 }

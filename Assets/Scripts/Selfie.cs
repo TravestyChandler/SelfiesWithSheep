@@ -13,6 +13,7 @@ public class Selfie : MonoBehaviour {
 	public GameObject score;
 	private AudioSource audioSrc;
 	private Text scoreText;
+	private Score staticScore;
 	private Animator playerAnim;
 	public SpriteRenderer spr;
 	// Use this for initialization
@@ -20,6 +21,7 @@ public class Selfie : MonoBehaviour {
 		colliderList = new List<Collider2D>();
 		lastCount = 0;
 		spriteRenderer.renderer.enabled = false;
+		staticScore = score.GetComponent<Score>();
 		scoreText = score.GetComponent<Text>();
 		scoreText.text = "0\nSHEEPSES";
 
@@ -62,6 +64,7 @@ public class Selfie : MonoBehaviour {
 		StartCoroutine(Flash());
 		if(lastCount > highCount) {
 			highCount = lastCount;
+			staticScore.SetScore (highCount);
 			scoreText.text = highCount.ToString () + "\nSHEEPSES";
 		}
 	}
