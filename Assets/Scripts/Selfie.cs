@@ -13,6 +13,7 @@ public class Selfie : MonoBehaviour {
 	public GameObject score;
 	private Text scoreText;
 	private Animator playerAnim;
+	public SpriteRenderer spr;
 	// Use this for initialization
 	void Start () {
 		colliderList = new List<Collider2D>();
@@ -55,9 +56,29 @@ public class Selfie : MonoBehaviour {
 	// Take the selfie! Update the last and high counts!
 	void SelfieShot() {
 		lastCount = colliderList.Count;
+		StartCoroutine(Flash());
 		if(lastCount > highCount) {
 			highCount = lastCount;
 			scoreText.text = highCount.ToString () + "\nSHEEPSES";
+		}
+	}
+
+	IEnumerator Flash(){
+		float time = 0.0f;
+		while(time < 0.01f){
+			time += 0.005f;
+			Color col = spr.color;
+			col.a = time/0.01f;
+			spr.color = col;
+			yield return new WaitForSeconds(0.005f);
+		}
+		time = 0.1f;
+		while(time > 0f){
+			time -= 0.01f;
+			Color col = spr.color;
+			col.a = time/0.1f;
+			spr.color = col;
+			yield return new WaitForSeconds(0.01f);
 		}
 	}
 }
