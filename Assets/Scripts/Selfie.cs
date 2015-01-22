@@ -23,7 +23,7 @@ public class Selfie : MonoBehaviour {
 		spriteRenderer.renderer.enabled = false;
 		staticScore = score.GetComponent<Score>();
 		scoreText = score.GetComponent<Text>();
-		scoreText.text = "0\nSHEEPSES";
+		scoreText.text = "0 SHEEPSES";
 
 		playerAnim = player.GetComponent<Animator>();
 		audioSrc = this.GetComponent<AudioSource>();
@@ -65,7 +65,7 @@ public class Selfie : MonoBehaviour {
 		if(lastCount > highCount) {
 			highCount = lastCount;
 			staticScore.SetScore (highCount);
-			scoreText.text = highCount.ToString () + "\nSHEEPSES";
+			scoreText.text = highCount.ToString () + " SHEEPSES";
 		}
 	}
 
