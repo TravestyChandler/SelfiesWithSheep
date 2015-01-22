@@ -9,11 +9,13 @@ public class Menu : MonoBehaviour {
 	private Image tweet;
 	private bool doneFading;
 	public bool clicked = false;
+	public AudioSource audioSrc;
 	// Use this for initialization
 	void Start () {
 		doneFading = false;
 		tweet = tweetObject.GetComponent<Image>();
 		FireFadeCoroutine(true);
+		audioSrc = this.GetComponent<AudioSource>();
 	}
 	
 	// Update is called once per frame
@@ -24,6 +26,8 @@ public class Menu : MonoBehaviour {
 		if(doneFading) {
 			panel1.SetActive (true);
 			panel2.SetActive(true);
+			if(!audioSrc.isPlaying)
+				audioSrc.Play ();
 		}
 	}	
 
