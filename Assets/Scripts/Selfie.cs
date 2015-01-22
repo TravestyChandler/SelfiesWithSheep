@@ -12,7 +12,7 @@ public class Selfie : MonoBehaviour {
 	public int lastCount, highCount;
 	public GameObject score;
 	private Text scoreText;
-
+	private Animator playerAnim;
 	// Use this for initialization
 	void Start () {
 		colliderList = new List<Collider2D>();
@@ -20,6 +20,7 @@ public class Selfie : MonoBehaviour {
 		spriteRenderer.renderer.enabled = false;
 		scoreText = score.GetComponent<Text>();
 		scoreText.text = "0";
+		playerAnim = player.GetComponent<Animator>();
 	}
 	
 	// Update is called once per frame
@@ -27,11 +28,13 @@ public class Selfie : MonoBehaviour {
 		//Debug.Log (colliderList.Count);
 		// Show selfie area while space is held
 		// Take selfie when space is released
-		if(Input.GetKey ("space")) {
+		if(Input.GetKeyDown ("space")) {
+			playerAnim.SetBool ("Selfieing", true);
 			spriteRenderer.renderer.enabled = true;
 		}
 		if(Input.GetKeyUp ("space")) {
 			SelfieShot ();
+			playerAnim.SetBool ("Selfieing", false);
 			spriteRenderer.renderer.enabled = false;
 		}
 	}

@@ -10,7 +10,7 @@ public class Sheep : MonoBehaviour {
 	public string feeling;
 	public string personality;
 	private bool moving, waiting;
-
+	public Animator anim;
 	// Use this for initialization
 	// Set personality traits and color of sheep
 	void Awake () {
@@ -20,12 +20,14 @@ public class Sheep : MonoBehaviour {
 		SetMovement(feeling);
 		moving = false;
 		waiting = false;
+		//anim = this.GetComponent<Animator>();
 	}
 
 	// Randomizes sheep texture
 	void DetermineTexture() {
 		spriteRenderer = this.GetComponent<SpriteRenderer>();
 		int r = (int)Random.Range (0.00f, 2.99f);
+		anim.SetInteger ("Color", r);
 		spriteRenderer.sprite = sheepSprites[r];
 	}
 
