@@ -11,6 +11,7 @@ public class Selfie : MonoBehaviour {
 	public List<Collider2D> colliderList;
 	public int lastCount, highCount;
 	public GameObject score;
+	private AudioSource audioSrc;
 	private Text scoreText;
 	private Animator playerAnim;
 	public SpriteRenderer spr;
@@ -23,6 +24,7 @@ public class Selfie : MonoBehaviour {
 		scoreText.text = "0\nSHEEPSES";
 
 		playerAnim = player.GetComponent<Animator>();
+		audioSrc = this.GetComponent<AudioSource>();
 	}
 	
 	// Update is called once per frame
@@ -55,6 +57,7 @@ public class Selfie : MonoBehaviour {
 
 	// Take the selfie! Update the last and high counts!
 	void SelfieShot() {
+		audioSrc.Play ();
 		lastCount = colliderList.Count;
 		StartCoroutine(Flash());
 		if(lastCount > highCount) {
