@@ -8,7 +8,7 @@ public class Menu : MonoBehaviour {
 	public GameObject panel1, panel2, panelOptions;
 	private Image tweet;
 	private bool doneFading;
-
+	public bool clicked = false;
 	// Use this for initialization
 	void Start () {
 		doneFading = false;
@@ -18,6 +18,9 @@ public class Menu : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		if(Input.GetMouseButtonDown(0)){
+			clicked = true;
+		}
 		if(doneFading) {
 			panel1.SetActive (true);
 			panel2.SetActive(true);
@@ -33,16 +36,41 @@ public class Menu : MonoBehaviour {
 			Color c = tweet.color;
 			c.a = f;
 			tweet.color = c;
+			if(clicked){
+				break;
+			}
 			yield return new WaitForSeconds(0.05f);
 		}
-		yield return new WaitForSeconds(1.5f);
+		float time = 0;
+		while(time < 2.5f){
+			if(clicked){
+				break;
+			}
+			time += 0.1f;
+			yield return new WaitForSeconds(0.1f);
+		}
 		for(float f=1f; f >=0.0f; f-=0.02f) {
 			Color c = tweet.color;
 			c.a = f;
 			tweet.color = c;
+			if(clicked){
+				break;
+			}
 			yield return new WaitForSeconds(0.02f);
 		}
-		yield return new WaitForSeconds(1.5f);
+		time = 0;
+		while(time < 2.5f){
+			if(clicked){
+				break;
+			}
+			time += 0.1f;
+			yield return new WaitForSeconds(0.1f);
+		}
+		if(clicked){
+			Color c = tweet.color;
+			c.a = 0.0f;
+			tweet.color = c;
+		}
 		doneFading = true;
 	}
 
