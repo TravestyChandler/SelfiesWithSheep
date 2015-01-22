@@ -19,7 +19,7 @@ public class Selfie : MonoBehaviour {
 		lastCount = 0;
 		spriteRenderer.renderer.enabled = false;
 		scoreText = score.GetComponent<Text>();
-		scoreText.text = "0";
+		scoreText.text = "0\nSHEEPSES";
 	}
 	
 	// Update is called once per frame
@@ -53,7 +53,7 @@ public class Selfie : MonoBehaviour {
 		lastCount = colliderList.Count;
 		if(lastCount > highCount) {
 			highCount = lastCount;
-			scoreText.text = highCount.ToString ();
+			scoreText.text = highCount.ToString () + "\nSHEEPSES";
 		}
 	}
 }
