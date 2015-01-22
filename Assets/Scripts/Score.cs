@@ -1,13 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+
 public class Score : MonoBehaviour {
 
 	public static int score;
 
 	public void SetScore(int s) {
 		score = s;
-		Debug.Log (score);
+		//Debug.Log (score);
 	}
 
 	public int GetScore() {
