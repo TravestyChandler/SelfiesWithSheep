@@ -1,2 +1,2 @@
-#Selfies With Sheep
+# Selfies With Sheep
 Part of a 'KimKierkegaardashian' game jam, in which developers were tasked with creating a game based on tweets by an account of the same name, that blends Kim Kardashian and Kierkegaard quotes, Selfies with Sheep has the player take selfies with as many sheep as possible.  The player must angle themselves in a way that the sheep are captured by the camera on Kim's phone while moving around the environment.
